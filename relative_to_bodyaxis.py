@@ -63,7 +63,6 @@ def relative_to_body_array(bodypart_array, R,offset):
     x_array = []
     y_array = []
     for i_0 in range (len(bodypart_array.x)):
-        print(i_0)
         xprime, yprime = R[i_0].dot(np.array([bodypart_array.x[i_0],bodypart_array.y[i_0]]))
         x_array.append(xprime-offset[i_0][0])
         y_array.append(yprime-offset[i_0][1])
