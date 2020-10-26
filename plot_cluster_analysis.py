@@ -88,17 +88,14 @@ if __name__ == "__main__":
     from matplotlib.patches import Ellipse # ellipse plotting
     from scipy.stats import gaussian_kde # density plot
 
-    # # labels of interest
-    # bodyparts = [label for label in bodyparts_list(df) if "side" not in label]
-    # bodyparts.remove("nose")
-    # tails = [label for label in bodyparts if "T" in label]
-    # tails.remove("T1")
-    # # bodyparts = [label for label in bodyparts if label not in tails]
-    # print(bodyparts)
-    # print(tails)
+    # labels of interest
+    bodyparts = [label for label in bodyparts_list(df) if "side" not in label]
+    bodyparts.remove("nose")
+    tails = [label for label in bodyparts if "T" in label]
+    tails.remove("T1")
 
-    bodyparts = ['RF', 'LF', 'RB', 'LB', 'T1', 'T2', 'T3', 'T4', 'T5']
-    tail = ['T1', 'T2', 'T3', 'T4', 'T5']
+    print(bodyparts, "to be plotted features")
+    print(tails, "to be plotted features tail parts")
 
     # initialize parameters
     ellipse_parameters = {}
@@ -177,7 +174,7 @@ if __name__ == "__main__":
     axes_scatter[1].legend()
     # plot tail parts
     x_tailcoordinates, y_tailcoordinates = [0], [-np.abs(middle_bodypoint)/2]
-    for T in tail[1:]:
+    for T in tails:
         x_tailcoordinates.append(ellipse_parameters[T]["xcenter"])
         y_tailcoordinates.append(ellipse_parameters[T]["ycenter"])
     axes_ellipse[0].plot(x_tailcoordinates, y_tailcoordinates, color="maroon", alpha=.3)
