@@ -51,7 +51,7 @@ class outlier_removed_labelarray():
 
 if __name__ == "__main__":
     # import data
-    df = dlc_data_to_dataframe("/home/sytjon/PycharmProjects/python/DLC/demodata/2182recid_bodycam_fiji50fpsDLC_resnet50_wheelbottomviewJan7shuffle1_1030000.h5")
+    df = dlc_data_to_dataframe("demodata/2182recid_bodycam_fiji50fpsDLC_resnet50_wheelbottomviewJan7shuffle1_1030000.h5")
 
     # retrieve outlier removed array
     LFarray = outlier_removed_labelarray(df=df, label="left_front", thresh=3, movementframes=[54305,54800])
@@ -60,12 +60,51 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
     # load video frame to visualise if the removed points make sense
-    img = mpimg.imread("/home/sytjon/PycharmProjects/python/DLC/demodata/2182recid_bodycam_Wheel.png")
+    img = mpimg.imread("demodata/2182recid_bodycam_Wheel.png")
     plt.imshow(img)
     # plot the array before outlier removal as a test it worked
     plt.scatter(np.array(bodypart_array(dataframe_per_bodypart(df, "left_front"), pos='x'))[54305:54800],
                 np.array(bodypart_array(dataframe_per_bodypart(df, "left_front"), pos='y'))[54305:54800],
-                alpha=0.5, color="tab:red")
-    plt.scatter(LFarray.x, LFarray.y, alpha=0.05, color="tab:green")
+                alpha=0.5, color="tab:red", label="raw")
+    plt.scatter(LFarray.x, LFarray.y,
+                alpha=0.1, color="tab:green", label="outlier-rm")
+
+    plt.legend()
     plt.show()
 
+    """
+    ellipse fitting
+    --------------
+    maybe is it not to your liking and want to try different thresh
+    """
+
+    from skimage.measure import EllipseModel
+    from matplotlib.patches import Ellipse
+
+    ell = EllipseModel()
+    ell.estimate(np.stack([LFarray.x, LFarray.y], axis=-1))
+
+    xc, yc, a, b, theta = ell.params
+    print("center", (xc, yc))
+    print("angle of rotation", theta)
+    print("axis= ", (a, b))
+
+    fig, axes = plt.subplots()
+    plt.imshow(img)
+    axes.scatter(LFarray.x, LFarray.y)
+    axes.scatter(xc, yc)
+    nstd = 1
+    ell_patch = Ellipse((xc, yc), 2 * nstd * a, 2 * nstd * b, theta * 180 / np.pi, edgecolor="red", facecolor="none",
+                        label=r"1$\sigma$")
+    axes.add_patch(ell_patch)
+    nstd = 2
+    ell_patch = Ellipse((xc, yc), 2 * nstd * a, 2 * nstd * b, theta * 180 / np.pi, edgecolor="blue", facecolor="none",
+                        label=r"2$\sigma$")
+    axes.add_patch(ell_patch)
+    nstd = 3
+    ell_patch = Ellipse((xc, yc), 2 * nstd * a, 2 * nstd * b, theta * 180 / np.pi, edgecolor="green", facecolor="none",
+                        label=r"3$\sigma$")
+    # add the  fitted ellipse to the axes information
+    axes.add_patch(ell_patch)
+    plt.legend()
+    plt.show()
