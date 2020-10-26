@@ -85,7 +85,7 @@ if __name__ == "__main__":
             self.y = np.array(dataframe_per_bodypart(df, label)["y"].values)
 
     # import DLC data to table/dataframe
-    df = dlc_data_to_dataframe("Data/16454_07_42DLC_resnet50_BaduraLocomousejul22shuffle1_200000.h5")
+    df = dlc_data_to_dataframe("demodata/16454_07_42DLC_resnet50_BaduraLocomousejul22shuffle1_200000.h5")
 
     # side view only labels
     labels = bodyparts_list(df=df,
@@ -107,7 +107,3 @@ if __name__ == "__main__":
         plt.plot(time, array.x, label=label)
     plt.legend()
     plt.show()
-
-
-
-

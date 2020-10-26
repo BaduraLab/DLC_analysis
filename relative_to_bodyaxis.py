@@ -103,7 +103,7 @@ def extract_neck_point(x_nose, y_nose, xy_0, xy_1):
 if __name__ == "__main__":
     from load_dlc_data import dlc_data_to_dataframe, dataframe_per_bodypart, frames_array
 
-    df = dlc_data_to_dataframe("Data/16454_07_42DLC_resnet50_BaduraLocomousejul22shuffle1_200000.h5")
+    df = dlc_data_to_dataframe("demodata/16454_07_42DLC_resnet50_BaduraLocomousejul22shuffle1_200000.h5")
 
     class label_array:
         """
