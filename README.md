@@ -9,6 +9,7 @@ The code is currently maintained by [Saffira Tjon](https://neuro.nl/person/Saffi
 
 ## How to use ? 
 * import code and plot raw data 
+  * [ ] merging .h5 file per :mouse2:
 * Preprocessing
   * [x] outlier removal
   * [x] relative to bodyaxis
