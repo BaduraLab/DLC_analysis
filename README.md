@@ -15,6 +15,7 @@ The code is currently maintained by [Saffira Tjon](https://neuro.nl/person/Saffi
   * [x] smoothing/filtering/averaging
   * [ ] movement extraction
   * [ ] weight correction
+  * [ ] pixeland frames conversion
 * parameter extraction
   * [x] stride length/duration
   * [ ] step length/duration
@@ -22,9 +23,13 @@ The code is currently maintained by [Saffira Tjon](https://neuro.nl/person/Saffi
   * [ ] velocity
 
 Most of the code has a section that will only display upon running the file:
-'''
+
+```
+
 if __name__ == "__main__":
-'''
+
+```
+
 Here I have 
 
 ### Import data 
